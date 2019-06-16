@@ -40,15 +40,17 @@ volumes: [
 ]){
     node(label) {
 
-
-        def inputFile = readFile('Jenkinsfile.json')
-        def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
         def repo = checkout scm
         def gitCommit = repo.GIT_COMMIT
+        println "commit id ${gitCommit}"
         def gitBranch = repo.GIT_BRANCH
+        println "branch is  ${gitBranch}"
         def shortGitCommit = "v-${gitCommit[0..6]}"
         def pwd = pwd()
         def chartDir = "${pwd}/charts"
+        def inputFile = readFile('Jenkinsfile.json')
+        def config = new groovy.json.JsonSlurperClassic().parseText(inputFile)
+     
         
         stage('Run unit test') {  
             println "开始单元测试..."           
