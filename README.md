@@ -1,0 +1,1 @@
+# AspNetCore.Kube.Devops
