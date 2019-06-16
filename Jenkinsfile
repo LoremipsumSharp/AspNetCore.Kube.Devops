@@ -77,7 +77,7 @@ volumes: [
                             sh """
                             docker --version
                             echo $shortGitCommit
-                            docker build -t ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:$shortGitCommit -t ${config.docker.registry}/${config.docker.repo}/aspnetcore-kube-devops:latest .                            
+                            docker build -t ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:$shortGitCommit -t ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:latest .                            
                             docker push ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:$shortGitCommit
                             docker push ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:latest
                             """
