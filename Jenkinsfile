@@ -70,7 +70,7 @@ volumes: [
         stage("Build and push docker image") {
             println "开始构建并发布docker镜像..."
             container('docker') {
-                withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: config.container_repo.jenkins_creds_id,
+                withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: config.app.registry_creds_id,
                         usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                             sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${config.app.docker.registry}"
                             println "登陆docker registry 成功！"
