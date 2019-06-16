@@ -1,0 +1,20 @@
+application:
+  name: dotnet
+image:
+   repository: index.docker.io/morining/aspnetcore-kube-devops
+   tag: "latest"
+   pullPolicy: "IfNotPresent"
+deployment:
+  port: 80
+  instances : 1
+service: 
+  port: 80
+  nodeport: 31909
+  targetPort: 80
+resources:
+  requests:
+    memory: 500Mi
+    cpu: 200m
+  limits:
+    memory: 500Mi
+    cpu: 200m

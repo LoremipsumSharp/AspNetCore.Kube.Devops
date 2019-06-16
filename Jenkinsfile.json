@@ -1,0 +1,12 @@
+{
+    "app": {
+        "name": "aspnetcore-kube-devops",
+        "namespace": "demo",
+        "docker": {
+            "registry": "index.docker.io",
+            "repo":"morining",
+            "image_name": "aspnetcore-kube-devops",
+            "registry_creds_id": "docker_regirstry_creds"
+        }
+    }
+}
