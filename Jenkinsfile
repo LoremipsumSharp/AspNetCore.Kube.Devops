@@ -50,11 +50,6 @@ volumes: [
         def pwd = pwd()
         def chartDir = "${pwd}/charts"
         
-        stage('Checkout') {
-            println "开始签出代码..."     
-            checkout scm
-        }
-
         stage('Run unit test') {  
             println "开始单元测试..."           
         }
@@ -76,16 +71,16 @@ volumes: [
             container('docker') {
                 withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: config.container_repo.jenkins_creds_id,
                         usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                            sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${config.container_repo.registry}"
+                            sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${config.app.docker.registry}"
                             println "登陆docker registry 成功！"
                         }
 
                 sh """
                     docker --version
                     echo $shortGitCommit
-                    docker build -t ${config.container_repo.registry}/aspnetcore-kube-devops:$shortGitCommit -t ${config.container_repo.registry}/aspnetcore-kube-devops:latest .                            
-                    docker push ${config.container_repo.registry}aspnetcore-kube-devops:$shortGitCommit
-                    docker push ${config.container_repo.registry}/aspnetcore-kube-devops:latest
+                    docker build -t ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:$shortGitCommit -t ${config.docker.registry}/${config.docker.repo}/aspnetcore-kube-devops:latest .                            
+                    docker push ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:$shortGitCommit
+                    docker push ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:latest
                """
             }
         }
