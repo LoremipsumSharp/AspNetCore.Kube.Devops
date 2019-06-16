@@ -74,15 +74,14 @@ volumes: [
                         usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                             sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${config.app.docker.registry}"
                             println "登陆docker registry 成功！"
+                            sh """
+                            docker --version
+                            echo $shortGitCommit
+                            docker build -t ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:$shortGitCommit -t ${config.docker.registry}/${config.docker.repo}/aspnetcore-kube-devops:latest .                            
+                            docker push ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:$shortGitCommit
+                            docker push ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:latest
+                            """
                         }
-
-                sh """
-                    docker --version
-                    echo $shortGitCommit
-                    docker build -t ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:$shortGitCommit -t ${config.docker.registry}/${config.docker.repo}/aspnetcore-kube-devops:latest .                            
-                    docker push ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:$shortGitCommit
-                    docker push ${config.app.docker.registry}/${config.app.docker.repo}/aspnetcore-kube-devops:latest
-               """
             }
         }
     
