@@ -10,7 +10,7 @@ def helmLint(String chartDir) {
 
 def helmDeploy(Map args) {
     helmLint(args.chartDir)
-    if (args.dry_run) {
+    if (args.dryRun) {
         println "Running dry-run deployment"
         sh "helm upgrade --dry-run --install ${args.name} ${args.chartDir}  --namespace=${args.namespace}"
     } else {
@@ -103,8 +103,9 @@ volumes: [
         container('helm') {
         helmDeploy(
         chartDir:chartDir,
-        namespace:helmAppName,
-        name:kubeNamespace)}
+        namespace:kubeNamespace,
+        dryRun:false,
+        name:helmAppName)}
     }
 }
 }
