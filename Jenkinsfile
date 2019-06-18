@@ -56,10 +56,7 @@ node(label) {
   }
 
   stage("docker build && docker push"){
-    when{
-        params.CAN_DEPLOY_TO_DEV true
-    }
-    steps{
+
         container('docker') {
             withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: registryCredsId,
             usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
@@ -75,22 +72,18 @@ node(label) {
             }
         }
     }
-  }
+  
 
   stage("deploy"){
-    when{
-        params.CAN_DEPLOY_TO_DEV true
-    }
-    steps{
-        container('helm') {
+    container('helm') {
         helmDeploy(
         chartDir:chartDir,
         namespace:config.app.namespace,
         name:config.app.name)
-        }
+    }
     }
 
-  }
+  
 
 
 }
