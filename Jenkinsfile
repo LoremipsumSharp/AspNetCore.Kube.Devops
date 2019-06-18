@@ -56,7 +56,7 @@ volumes: [
         def dockerRepo = "morining"
         
         def pwd = pwd()
-        def chartDir = "${pwd}/charts"
+        def chartDir = "${pwd}/charts/aspnetcore-kube-devops"
         def versionNumber = sh(
         script: 'head -1 CHANGELOG',
         returnStdout: true).trim()
