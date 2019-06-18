@@ -1,12 +1,11 @@
 #!/usr/bin/groovy
 
+
+
+
+
+
 def label = "worker-${UUID.randomUUID().toString()}"
-
-
-
-
-// INPUT PARAMETERS
-
 parameters([
     gitParameter(name: 'BRANCH_NAME', defaultValue: 'master', selectedValue: 'DEFAULT', type: 'PT_BRANCH'),
     booleanParam(name: 'CAN_DOCKER_BUILD_AND_PUSH',defaultValue: true, description: 'build and push docker image'),
@@ -40,50 +39,9 @@ node(label) {
     checkout scm: [$class: 'GitSCM', branches: [[name: "refs/heads/${params.BRANCH}"]]] 
   }
   
-  stage('unit test') { 
-    
-  }
-
-  stage('build'){
-    container('netcore22') {
-      sh """
-      cd src
-      dotnet restore
-      dotnet build
-      dotnet publish -c Release -o publish 
-      """
-    }
-  }
-
-  stage("docker build && docker push"){
-
-        container('docker') {
-            withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: registryCredsId,
-            usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-            sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${dockerRegistry}"
-            println "登陆docker registry 成功！"
-            sh """
-            docker --version
-            echo $shortGitCommit
-            docker build -t ${dockerRegistry}/${dockerRepo}/${dockerImageName}:${imageTag} -t ${dockerRegistry}/${dockerRepo}/${dockerImageName}:latest .                            
-            docker push ${dockerRegistry}/${dockerRepo}/${dockerImageName}:${imageTag}
-            docker push ${dockerRegistry}/${dockerRepo}/${dockerImageName}:${imageTag}
-            """
-            }
-        }
-    }
-  
-
-  stage("deploy"){
-    container('helm') {
-        helmDeploy(
-        chartDir:chartDir,
-        namespace:config.app.namespace,
-        name:config.app.name)
-    }
-    }
 
   
+
 
 
 }
