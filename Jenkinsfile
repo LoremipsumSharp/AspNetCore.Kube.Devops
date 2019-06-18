@@ -44,6 +44,11 @@ volumes: [
   hostPathVolume(mountPath: '/home/jenkins/.nuget/packages', hostPath: '/home/.nuget/packages/')
 ]){
     node(label) {
+
+    stage('check out') {
+        checkout scm: [$class: 'GitSCM', branches: [[name: "refs/heads/${params.BRANCH}"]]] 
+    }
+
         def dockerImageName ="aspnetcore-kube-devops"
         def dockerRegistry ="index.docker.io"
         def dockerRepo = "morining"
@@ -54,11 +59,6 @@ volumes: [
         script: 'date +%y%m%d%H%M',
         returnStdout: true).trim()
         def registryCredsId = "docker_regirstry_creds"
-
-
-    stage('check out') {
-        checkout scm: [$class: 'GitSCM', branches: [[name: "refs/heads/${params.BRANCH}"]]] 
-    }
   
     stage('unit test') { 
     
