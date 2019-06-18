@@ -85,7 +85,6 @@ volumes: [
             println "登陆docker registry 成功！"
             sh """
             docker --version
-            echo $shortGitCommit
             docker build -t ${dockerRegistry}/${dockerRepo}/${dockerImageName}:${imageTag} -t ${dockerRegistry}/${dockerRepo}/${dockerImageName}:latest .                            
             docker push ${dockerRegistry}/${dockerRepo}/${dockerImageName}:${imageTag}
             docker push ${dockerRegistry}/${dockerRepo}/${dockerImageName}:${imageTag}
