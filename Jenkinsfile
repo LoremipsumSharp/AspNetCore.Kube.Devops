@@ -19,16 +19,7 @@ volumes: [
 ])
 node(label) {
 
-    def dockerImageName ="aspnetcore-kube-devops"
-    def dockerRegistry ="index.docker.io"
-    def dockerRepo = "morining"
-    def versionNumber = sh(
-    script: 'head -1 CHANGELOG',
-    returnStdout: true).trim()
-    def imageTag = versionNumber + "." + sh(
-    script: 'date +%y%m%d%H%M',
-    returnStdout: true).trim()
-    def registryCredsId = "docker_regirstry_creds"
+
 
 
   stage('check out') {
