@@ -27,12 +27,13 @@ def helmDeploy(Map args) {
 
 
 // INPUT PARAMETERS
-
-parameters([
-    gitParameter(name: 'BRANCH_NAME', defaultValue: 'master', selectedValue: 'DEFAULT', type: 'PT_BRANCH'),
-    booleanParam(name: 'CAN_DOCKER_BUILD_AND_PUSH',defaultValue: true, description: 'build and push docker image'),
-    booleanParam(name: 'CAN_DEPLOY_TO_DEV',defaultValue: true, description: 'deploy to dev')
+properties([
+    parameters([
+        gitParameter(name: 'BRANCH_NAME', defaultValue: 'master', selectedValue: 'DEFAULT', type: 'PT_BRANCH'),
+        booleanParam(name: 'CAN_DOCKER_BUILD_AND_PUSH',defaultValue: true, description: 'build and push docker image'),
+        booleanParam(name: 'CAN_DEPLOY_TO_DEV',defaultValue: true, description: 'deploy to dev')
    ])
+])
 podTemplate(label: label, serviceAccount: 'jenkins', containers: [
   containerTemplate(name: 'jnlp', image: 'lachlanevenson/jnlp-slave:3.10-1-alpine', args: '${computer.jnlpmac} ${computer.name}', workingDir: '/home/jenkins', resourceRequestCpu: '200m', resourceLimitCpu: '300m', resourceRequestMemory: '256Mi', resourceLimitMemory: '512Mi'),
   containerTemplate(name: 'netcore22', image: 'mcr.microsoft.com/dotnet/core/sdk:2.2', ttyEnabled: true),
