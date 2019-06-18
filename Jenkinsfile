@@ -12,11 +12,11 @@ def helmDeploy(Map args) {
     helmLint(args.chartDir)
     if (args.dry_run) {
         println "Running dry-run deployment"
-        sh "helm upgrade --dry-run --install ${args.name} ${args.chartDir}  --namespace=${namespace}"
+        sh "helm upgrade --dry-run --install ${args.name} ${args.chartDir}  --namespace=${args.namespace}"
     } else {
         println "Running deployment"
         // reimplement --wait once it works reliable
-        sh "helm upgrade --install ${args.name} ${args.chartDir}  --namespace=${namespace}"
+        sh "helm upgrade --install ${args.name} ${args.chartDir}  --namespace=${args.namespace}"
 
         // sleeping until --wait works reliably
         sleep(20)
