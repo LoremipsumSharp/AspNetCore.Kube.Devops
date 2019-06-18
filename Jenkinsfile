@@ -46,58 +46,58 @@ volumes: [
 ]){
     node(label) {
 
-    stage('check out') {
-        checkout scm
-        sh "git checkout ${params.BRANCH_NAME}" 
-    }
+//     stage('check out') {
+//         checkout scm
+//         sh "git checkout ${params.BRANCH_NAME}" 
+//     }
 
-        def dockerImageName ="aspnetcore-kube-devops"
-        def dockerRegistry ="index.docker.io"
-        def dockerRepo = "morining"
+//         def dockerImageName ="aspnetcore-kube-devops"
+//         def dockerRegistry ="index.docker.io"
+//         def dockerRepo = "morining"
         
-        def pwd = pwd()
-        def chartDir = "${pwd}/charts/aspnetcore-kube-devops"
-        def versionNumber = sh(
-        script: 'head -1 CHANGELOG',
-        returnStdout: true).trim()
-        def imageTag = versionNumber + "." + sh(
-        script: 'date +%y%m%d%H%M',
-        returnStdout: true).trim()
-        def registryCredsId = "docker_regirstry_creds"
+//         def pwd = pwd()
+//         def chartDir = "${pwd}/charts/aspnetcore-kube-devops"
+//         def versionNumber = sh(
+//         script: 'head -1 CHANGELOG',
+//         returnStdout: true).trim()
+//         def imageTag = versionNumber + "." + sh(
+//         script: 'date +%y%m%d%H%M',
+//         returnStdout: true).trim()
+//         def registryCredsId = "docker_regirstry_creds"
 
-        def kubeNamespace = "demo"
-        def helmAppName = "aspnetcore-kube-devops"
+//         def kubeNamespace = "demo"
+//         def helmAppName = "aspnetcore-kube-devops"
   
-    stage('unit test') { 
+//     stage('unit test') { 
     
-    }
+//     }
 
-    stage('build'){
-        container('netcore22') {
-        sh """
-        cd src
-        dotnet restore
-        dotnet build
-        dotnet publish -c Release -o publish 
-        """
-    }
-  }
+//     stage('build'){
+//         container('netcore22') {
+//         sh """
+//         cd src
+//         dotnet restore
+//         dotnet build
+//         dotnet publish -c Release -o publish 
+//         """
+//     }
+//   }
 
-    stage("docker build && docker push"){
-        container('docker') {
-            withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: registryCredsId,
-            usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-            sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
-            println "登陆docker registry 成功！"
-            sh """
-            docker --version
-            docker build -t ${dockerRepo}/${dockerImageName}:${imageTag} -t ${dockerRepo}/${dockerImageName}:latest .                            
-            docker push ${dockerRepo}/${dockerImageName}:${imageTag}
-            docker push ${dockerRepo}/${dockerImageName}:${imageTag}
-            """
-            }
-        }
-    }
+//     stage("docker build && docker push"){
+//         container('docker') {
+//             withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: registryCredsId,
+//             usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+//             sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
+//             println "登陆docker registry 成功！"
+//             sh """
+//             docker --version
+//             docker build -t ${dockerRepo}/${dockerImageName}:${imageTag} -t ${dockerRepo}/${dockerImageName}:latest .                            
+//             docker push ${dockerRepo}/${dockerImageName}:${imageTag}
+//             docker push ${dockerRepo}/${dockerImageName}:${imageTag}
+//             """
+//             }
+//         }
+//     }
 
     stage("deploy"){
         container('helm') {
