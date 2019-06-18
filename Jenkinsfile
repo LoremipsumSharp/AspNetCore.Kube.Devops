@@ -47,7 +47,8 @@ volumes: [
     node(label) {
 
     stage('check out') {
-        checkout scm: [$class: 'GitSCM', branches: [[name: "refs/heads/${params.BRANCH_NAME}"]]] 
+        checkout scm
+        sh "git checkout ${params.BRANCH_NAME}" 
     }
 
         def dockerImageName ="aspnetcore-kube-devops"
