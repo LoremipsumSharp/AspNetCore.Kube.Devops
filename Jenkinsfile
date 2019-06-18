@@ -81,13 +81,13 @@ volumes: [
         container('docker') {
             withCredentials([[$class          : 'UsernamePasswordMultiBinding', credentialsId: registryCredsId,
             usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-            sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${dockerRegistry}"
+            sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
             println "登陆docker registry 成功！"
             sh """
             docker --version
-            docker build -t ${dockerRegistry}/${dockerRepo}/${dockerImageName}:${imageTag} -t ${dockerRegistry}/${dockerRepo}/${dockerImageName}:latest .                            
-            docker push ${dockerRegistry}/${dockerRepo}/${dockerImageName}:${imageTag}
-            docker push ${dockerRegistry}/${dockerRepo}/${dockerImageName}:${imageTag}
+            docker build -t ${dockerRepo}/${dockerImageName}:${imageTag} -t ${dockerRepo}/${dockerImageName}:latest .                            
+            docker push ${dockerRepo}/${dockerImageName}:${imageTag}
+            docker push ${dockerRepo}/${dockerImageName}:${imageTag}
             """
             }
         }
