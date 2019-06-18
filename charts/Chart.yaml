@@ -1,9 +1,9 @@
-name: croc-hunter
-home: https://github.com/lachie83/croc-hunter
-version: 0.3.1
-description: Live out your dream hunting Crocs
+name: aspnetcore-kube-devops
+home: https://github.com/morining/AspNetCore.Kube.Devops.git
+version: 1.0.0
+description: 
 sources:
-  - https://github.com/lachie83/croc-hunter
+  - https://github.com/morining/AspNetCore.Kube.Devops.git
 maintainers:
-  - name: Lachlan Evenson
-    email: lachlan.evenson@gmail.com
+  - name: loremipsum
+    email: 289989941@qq.com
