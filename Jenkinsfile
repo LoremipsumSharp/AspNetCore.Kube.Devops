@@ -46,10 +46,10 @@ volumes: [
 ]){
     node(label) {
 
-    // stage('check out') {
-    //     checkout scm
-    //     sh "git checkout ${params.BRANCH_NAME}" 
-    // }
+    stage('check out') {
+        checkout scm
+        sh "git checkout ${params.BRANCH_NAME}" 
+    }
 
         // def dockerImageName ="aspnetcore-kube-devops"
         // def dockerRegistry ="index.docker.io"
