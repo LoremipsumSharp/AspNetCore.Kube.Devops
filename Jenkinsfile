@@ -20,7 +20,7 @@ def registryCredsId = "docker_regirstry_creds"
 properties([
   parameters([
     gitParameter(name: 'BRANCH_NAME', defaultValue: 'master', selectedValue: 'DEFAULT', type: 'PT_BRANCH'),
-    booleanParam(name: 'CAN_DOCKER_BUILD_AND_PUSH',defaultValue: true, description: 'build and push docker image')
+    booleanParam(name: 'CAN_DOCKER_BUILD_AND_PUSH',defaultValue: true, description: 'build and push docker image'),
     booleanParam(name: 'CAN_DEPLOY_TO_DEV',defaultValue: true, description: 'deploy to dev')
    ])
 ])
