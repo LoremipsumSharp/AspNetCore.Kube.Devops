@@ -2,7 +2,7 @@ application:
   name: dotnet
 image:
    repository: index.docker.io/morining/aspnetcore-kube-devops
-   tag: "latest"
+   imageTag: "latest"
    pullPolicy: "IfNotPresent"
 deployment:
   port: 80
