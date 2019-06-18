@@ -104,7 +104,7 @@ volumes: [
         helmDeploy(
         chartDir:chartDir,
         namespace:kubeNamespace,
-        imageTag:imageTag
+        imageTag:imageTag,
         dryRun:false,
         name:helmAppName)}
     }
