@@ -11,7 +11,7 @@
     <PackageReference Include="Mediatr" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Newtonsoft.json" Version="12.0.2" />
+    <PackageReference Include="Newtonsoft.json" Version="13.0.2" />
     <PackageReference Include="quartz" Version="3.0.7" />
   </ItemGroup>
 
